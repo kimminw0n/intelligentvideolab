@@ -60,9 +60,13 @@
       border-bottom: 1px solid var(--border); background: color-mix(in srgb, var(--bg) 85%, transparent);
     }
     .nav {
-      display: flex; align-items: center; justify-content: space-between; padding: 14px 0;
+      display: flex; align-items: center; justify-content: space-between; padding: 0px 0;
     }
-    .brand { font-weight: 700; letter-spacing: -0.2px; }
+    .brand {
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  font-size: 1.5rem; /* 추가 */
+}
     .brand .lab { color: var(--accent); }
     nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 18px; }
     nav a { padding: 8px 10px; border-radius: 10px; color: var(--muted); font-weight: 600; }
@@ -97,7 +101,24 @@
 
     /* ===== Professor ===== */
     .prof { display: grid; grid-template-columns: 140px 1fr; gap: 18px; align-items: center; }
-    .avatar { width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-weak), transparent), var(--border); display: grid; place-items: center; font-size: 28px; font-weight: 800; color: var(--accent); }
+   .avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;          /* 이미지가 원 밖으로 나가지 않도록 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--border); /* 이미지 없을 때 기본 배경 */
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 비율 유지하면서 원형 안에 꽉 채우기 */
+  border-radius: 50%;
+}
+
     .meta { display: grid; gap: 6px; }
     .meta a.link { color: var(--accent); font-weight: 600; }
     @media (max-width: 560px){ .prof { grid-template-columns: 1fr; } .avatar { margin: 0 auto; } }
@@ -134,8 +155,9 @@
   <!-- ===== Header ===== -->
   <header>
     <div class="container nav">
+      <img src="logo.png" alt="연구실 로고" width="120" height="auto" />
       <div class="brand" aria-label="지능형AI융합연구실">
-        <span class="lab">지능형AI융합연구실</span> · <span class="muted">[호남대학교/컴퓨터공학과]</span>
+        <span class="lab">지능형AI융합연구실</span>
       </div>
       <nav aria-label="주요 메뉴">
         <ul>
@@ -164,7 +186,6 @@
         <span class="chip">#NLP</span>
         <span class="chip">#Cloud</span>
       </div>
-      <a class="cta" href="mailto:contact@example.ac.kr">지원·협업 문의하기</a>
     </section>
 
     <!-- ===== 담당교수 ===== -->
@@ -172,7 +193,10 @@
       <div class="container">
         <h2>담당교수</h2>
         <div class="card prof" role="group" aria-label="담당교수 정보">
-          <div class="avatar" aria-hidden="true">PR</div>
+          <div class="avatar">
+  <img src="professor.jpg" alt="최광미 교수님 사진" />
+</div>
+
           <div class="meta">
             <h3>최광미 교수</h3>
             <div class="muted">호남대학교/컴퓨터공학과 · 지능형AI융합연구실</div>
