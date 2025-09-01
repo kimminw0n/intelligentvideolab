@@ -39,7 +39,7 @@
     a { color: inherit; text-decoration: none; }
     img { max-width: 100%; display: block; }
     .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
-    .section { padding: 72px 0; border-top: 1px solid var(--border); }
+    .section { scroll-margin-top: 80px; padding: 72px 0; border-top: 1px solid var(--border); }
     .section:first-of-type { border-top: 0; }
     h1, h2, h3 { line-height: 1.25; margin: 0 0 12px; }
     h2 { font-size: clamp(24px, 2.4vw, 32px); }
@@ -60,7 +60,7 @@
       border-bottom: 1px solid var(--border); background: color-mix(in srgb, var(--bg) 85%, transparent);
     }
     .nav {
-      display: flex; align-items: center; justify-content: space-between; padding: 0px 0;
+      display: flex; align-items: center; justify-content: space-between; padding-top: 20px;
     }
     .brand {
   font-weight: 700;
@@ -84,11 +84,7 @@
     }
 
     /* ===== Hero ===== */
-    .hero { padding: 64px 0 32px; }
-    .hero h1 { font-size: clamp(28px, 3.6vw, 42px); margin-bottom: 10px; }
-    .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
-    .chip { padding: 6px 10px; border: 1px solid var(--border); border-radius: 999px; font-size: 14px; color: var(--muted); background: var(--card); }
-    .cta { margin-top: 18px; display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 12px; background: var(--accent); color: #fff; font-weight: 700; }
+    .hero {text-align: center;}
 
     /* ===== Cards & Grids ===== */
     .grid { display: grid; gap: 18px; }
@@ -97,7 +93,7 @@
     @media (max-width: 920px){ .grid-3 { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 680px){ .grid-2, .grid-3 { grid-template-columns: 1fr; } }
 
-    .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 18px; box-shadow: 0 1px 0 color-mix(in srgb, var(--border) 50%, transparent); }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 18px; box-shadow: 0 1px 0 color-mix(in srgb, var(--border) 50%, transparent); font-size:20px;font-weight: 700;}
 
     /* ===== Professor ===== */
     .prof { display: grid; grid-template-columns: 140px 1fr; gap: 18px; align-items: center; }
@@ -127,11 +123,16 @@
     .area { display: grid; gap: 8px; }
     .area h3 { margin-bottom: 4px; }
     .tags { display: flex; flex-wrap: wrap; gap: 8px; }
-    .tag { padding: 6px 10px; background: var(--accent-weak); color: var(--accent); font-weight: 700; border-radius: 999px; font-size: 13px; }
+    .tag { display: inline-flex; height: 36px; padding: 6px 10px; background: var(--accent-weak); color: var(--accent); font-weight: 700; border-radius: 999px; font-size: 13px; }
 
     /* ===== Members ===== */
     .member { display: grid; gap: 6px; }
     .role { font-weight: 700; color: var(--muted); font-size: 14px; }
+    .member .link {
+  font-size: 13px;
+  color: #555;       /* 더 연한 회색 */
+  text-decoration: none;
+}
 
     /* ===== Activities (Timeline) ===== */
     .timeline { position: relative; padding-left: 18px; }
@@ -147,27 +148,55 @@
     .spacer-xxs { height: 6px; }
     .spacer-xs  { height: 10px; }
     .spacer-sm  { height: 16px; }
+
+    .video-section {
+  position: relative;
+  overflow: hidden;
+  height: 400px; /* 원하는 높이 */
+  color: white; /* 글자 색을 영상 위에서 잘 보이도록 */
+}
+
+.bg-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 영상이 꽉 차게 */
+  z-index: -1; /* 콘텐츠 뒤로 보냄 */
+}
+
+.video-section .content {
+  position: relative;
+  z-index: 1; /* 글자가 영상 위에 표시되도록 */
+  text-align: center;
+  padding: 50px 20px;
+  background: rgba(0,0,0,0.4); /* 가독성을 위해 반투명 배경 추가 가능 */
+  border-radius: 12px;
+  display: inline-block;
+}
+
   </style>
 </head>
-<body>
+<body id="top">
   <a href="#main" class="skip-link">본문으로 바로가기</a>
 
   <!-- ===== Header ===== -->
   <header>
     <div class="container nav">
-      <img src="logo.png" alt="연구실 로고" width="120" height="auto" />
       <div class="brand" aria-label="지능형AI융합연구실">
-        <span class="lab">지능형AI융합연구실</span>
+        <a href="#top"><img src="logo2.png" alt="연구실 로고" width="300" height="auto" /></a>
       </div>
       <nav aria-label="주요 메뉴">
         <ul>
-          <li><a href="#professor">담당교수</a></li>
           <li><a href="#about">연구실소개</a></li>
-          <li><a href="#research">연구분야</a></li>
-          <li><a href="#members">연구원</a></li>
           <li><a href="#activities">대외활동</a></li>
+          <li><a href="#research">연구분야</a></li>
+          <li><a href="#professor">담당교수</a></li>
+          <li><a href="#members">연구원</a></li>
         </ul>
       </nav>
+      <img src="logo.png" alt="연구실 로고" width="120" height="auto"  />
       <button class="menu-btn" aria-expanded="false" aria-controls="menu-panel" id="menuToggle">메뉴</button>
     </div>
     <div class="menu-panel" id="menu-panel">
@@ -175,56 +204,63 @@
   </header>
 
   <main id="main">
-    <!-- ===== Hero ===== -->
-    <section class="container hero">
-      <h1>지능형AI융합연구실 <span class="muted">Lab</span></h1>
-      <p class="muted"></p>
-      <div class="chips" aria-label="키워드">
-        <span class="chip">#AI</span>
-        <span class="chip">#IoT</span>
-        <span class="chip">#Computer Vision</span>
-        <span class="chip">#NLP</span>
-        <span class="chip">#Cloud</span>
-      </div>
-    </section>
-
-    <!-- ===== 담당교수 ===== -->
-    <section id="professor" class="section">
-      <div class="container">
-        <h2>담당교수</h2>
-        <div class="card prof" role="group" aria-label="담당교수 정보">
-          <div class="avatar">
-  <img src="professor.jpg" alt="최광미 교수님 사진" />
-</div>
-
-          <div class="meta">
-            <h3>최광미 교수</h3>
-            <div class="muted">호남대학교/컴퓨터공학과 · 지능형AI융합연구실</div>
-            <div>
-              <a class="link" href="mailto:prof@example.ac.kr">cgmi66@honam.ac.kr</a>
-              · <a class="link" href="#">Google Scholar</a>
-              · <a class="link" href="#">ORCID</a>
-            </div>
-            <div class="spacer-xxs"></div>
-            <p class="muted">전공: 빅데이터개론, 빅데이터시스템, 빅데이터실무, 자바프로그래밍, 객체지향프로그램</p>
-            <p>호남대학교 컴퓨터공학과 조교수로 재직하며 스마트팩토리 지능화 시스템, AI 딥러닝, 빅데이터 처리 분야를 연구하고 있습니다. 조선대학교 SW중심대학 초빙교수 등 다양한 교육·연구 경력을 보유하고 있으며, Ace Best Teacher상 등 다수의 수상을 통해 교육 역량을 인정받았습니다. 또한 산학협력 프로젝트와 연구 과제를 수행하며 산업 현장과의 연계를 강화하고 있습니다.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- ===== 연구실 소개 ===== -->
-    <section id="about" class="section">
+    <section id="about" class="section video-section">
+      <video autoplay muted loop playsinline class="bg-video">
+    <source src="video.mp4" type="video/mp4" />
+    </video>
       <div class="container">
-        <h2>연구실소개</h2>
+        <h2>지능형AI융합 연구실소개</h2>
         <div class="card">
-          <p>[연구실명]은(는) 데이터 기반 의사결정과 지능형 시스템을 연구합니다. 학부/대학원생이 함께 프로젝트와 논문을 수행하며, 오픈소스와 산학협력을 통한 실전 문제 해결을 지향합니다.</p>
-          <p class="muted">장비/환경: GPU 서버, 엣지 디바이스(라즈베리파이·Jetson), 로봇/센서, 클라우드(AWS·GCP) 등</p>
-        </div>
+          <p>지능형 AI 융합연구실은 첨단 인공지능 기술과 융합 응용 연구를 통해 이론과 실무를 아우르는 혁신적 연구를 수행하고 있습니다. 엣지 디바이스부터 AWS·GCP 기반 클라우드 인프라까지 다양한 환경을 활용하여 영상/음성 처리, 데이터 분류, LLM 등  경량화된 AI와 대규모 AI 모델이 공존하는 차세대 지능형 연구를 진행합니다.</p>
       </div>
     </section>
+<!-- ===== 대외활동 ===== -->
+    <section id="activities" class="section">
+  <div class="container">
+    <h2>대외활동</h2>
+    <div class="card timeline">
+      <div class="tl-item">
+        <div class="tl-date">2025-05</div>
+        <div><strong>스마트미디어학회</strong> 춘계학술대회 우수상
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2025-05</div>
+        <div><strong>전자통신학회</strong> 춘계학술대회 우수상 · 
+          <span class="muted">MFCC 음성인식 감정분석</span>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2025-06</div>
+        <div><strong>광주과학기술원(GIST)</strong> [Techive] 두번째 발표 참여 · 
+          <span class="muted">AI 최신 트렌드·응용 발표 + 실습 세션</span>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2025-06</div>
+        <div><strong>살레시오고</strong> 연구 및 학과 홍보 발표 · 
+          <span class="muted">멀티모달 상담 챗봇 LLM</span>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2025-06</div>
+        <div><strong>케냐 ICCSS</strong> 2025 컨퍼런스 · 
+          <span class="muted">멀티모달 상담 챗봇, MFCC 음성인식 감정분석</span>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2025-08</div>
+        <div><strong>제4회 SW 테스트 경진대회</strong> 본선진출 · 
+          <span class="muted">SW 품질관리 크라우드테스팅</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- ===== 연구분야 ===== -->
+
+     <!-- ===== 연구분야 ===== -->
     <section id="research" class="section">
       <div class="container">
         <h2>연구분야</h2>
@@ -275,8 +311,8 @@
             </div>
           </article>
           <article class="card area">
-            <h3>휴먼-로봇 상호작용</h3>
-            <p class="muted">감정 인식·피드백, IoT/로보틱스 연동</p>
+            <h3>감정분석 상호작용</h3>
+            <p class="muted">감정 인식·피드백, IoT</p>
             <div class="tags">
               <span class="tag">HRI</span>
               <span class="tag">IoT</span>
@@ -287,74 +323,80 @@
       </div>
     </section>
 
+    <!-- ===== 담당교수 ===== -->
+    <section id="professor" class="section">
+      <div class="container">
+        <h2>담당교수</h2>
+        <div class="card prof" role="group" aria-label="담당교수 정보">
+          <div class="avatar">
+  <img src="professor.jpg" alt="최광미 교수님 사진" />
+</div>
+
+          <div class="meta">
+            <h3>최광미 교수</h3>
+            <div class="muted">호남대학교/컴퓨터공학과 · 지능형AI융합연구실</div>
+            <div>
+              <a class="link" href="mailto:prof@example.ac.kr">mail : cgmi66@honam.ac.kr</a><br>
+              <a class="link">tel : 062-940-3665</a>
+            </div>
+            <div class="spacer-xxs"></div>
+            <p class="muted">전공 과목 : 빅데이터개론, 빅데이터시스템, 빅데이터실무, 자바프로그래밍, 객체지향프로그램</p>
+            <a class="link" href="https://com.honam.ac.kr/DepartmentProfessor/1863" target="https://com.honam.ac.kr/DepartmentProfessor/1863">
+              상세정보
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ===== 연구원 ===== -->
     <section id="members" class="section">
       <div class="container">
         <h2>연구원</h2>
         <div class="grid grid-3">
           <div class="card member">
-            <h3>김가람</h3>
-            <div class="role">석사과정 · CV</div>
-            <p class="muted">주제: 표정 인식 기반 상담 챗봇</p>
-            <a class="link" href="mailto:garam@example.ac.kr">garam@example.ac.kr</a>
+            <h3>김민원</h3>
+            <div class="role">학사과정 4학년</div>
+            <div class="tags">
+              <span class="tag">LLM</span>
+              <span class="tag">CNN</span>
+              <span class="tag">멀티모달</span>
+              <span class="tag">LSTM</span>
+            </div>
+            <a class="link" href="mailto:minwon0801@naver.com">minwon0801@naver.com</a>
           </div>
           <div class="card member">
-            <h3>박서윤</h3>
-            <div class="role">학부연구생 · NLP</div>
-            <p class="muted">주제: 감성 분석·RAG 기반 FAQ</p>
-            <a class="link" href="mailto:seoyoon@example.ac.kr">seoyoon@example.ac.kr</a>
+            <h3>박민수</h3>
+            <div class="role">학사과정 4학년</div>
+            <div class="tags">
+              <span class="tag">객체 분류</span>
+              <span class="tag">음성</span>
+              <span class="tag">RNN</span>
+              <span class="tag">영상처리</span>
+            </div>
           </div>
           <div class="card member">
-            <h3>이도윤</h3>
-            <div class="role">학부연구생 · Audio</div>
-            <p class="muted">주제: 이상음 탐지·실시간 알림</p>
-            <a class="link" href="mailto:doyoon@example.ac.kr">doyoon@example.ac.kr</a>
+            <h3>이승기</h3>
+            <div class="role">학사과정 4학년</div>
+            <div class="tags">
+              <span class="tag">YOLO</span>
+              <span class="tag">CNN</span>
+              <span class="tag">LSTM</span>
+              <span class="tag">멀티모달</span>
+            </div>
+            <a class="link" href="mailto:dltmdrl010729@naver.com">dltmdrl010729@naver.com</a>
           </div>
         </div>
       </div>
     </section>
-
-    <!-- ===== 대외활동 ===== -->
-    <section id="activities" class="section">
-      <div class="container">
-        <h2>대외활동</h2>
-        <div class="card timeline">
-          <div class="tl-item">
-            <div class="tl-date">2025-05</div>
-            <div><strong>스마트미디어학회</strong> 춘계학술대회 </strong> 우수상 · <span class="muted">멀티모달 상담 챗봇</span></div>
-          </div>
-          <div class="tl-item">
-            <div class="tl-date">2025-05</div>
-            <div><strong>전자통신학회</strong> 춘계학술대회 </strong> 우수상 · <span class="muted">MFCC 음성인식 감정분석</span></div>
-          </div>
-          <div class="tl-item">
-            <div class="tl-date">2025-06</div>
-            <div><strong>광주과학기술원(GIST)</strong> [Techive] 두번째 발표 참여 · <span class="muted">AI 최신 트렌드·응용 발표 + 실습 세션</span></div>
-          </div>
-          <div class="tl-item">
-            <div class="tl-date">2025-06</div>
-            <div><strong>살레시오고 </strong> 연구 및 학과 홍보 발표 · <span class="muted">멀티모달 상담 챗봇 LLM</span></div>
-          </div>
-          <div class="tl-item">
-            <div class="tl-date">2025-06</div>
-            <div><strong>케냐 ICCSS</strong> 2025 컨퍼런스 · <span class="muted">멀티모달 상담 챗봇 MFCC 음성인식 감정분석</span></div>
-          </div>
-          <div class="tl-item">
-            <div class="tl-date">2025-08</div>
-            <div><strong>제4회 SW 테스트 경진대회</strong> 본선진출 · <span class="muted">SW 품질관리 크라우드테스팅 </span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
 
   <!-- ===== Footer ===== -->
   <footer>
     <div class="container">
-      <div><strong>주소</strong> · [62399] [광주광역시 광산구 호남대길 112], [호남대학교 컴퓨터공학과/창조관(8호관)/8508호]</div>
+      <div><strong>주소</strong> · 62399 광주광역시 광산구 호남대길 112 호남대학교 컴퓨터공학과/창조관(8호관)/8508호</div>
       <div>대표 메일: <a href="mailto:contact@example.ac.kr">cgmi66@honam.ac.kr</a> · 전화: 062-940-3665</div>
       <div class="spacer-xs"></div>
-      <div class="muted">© <span id="year"></span> [연구실명]. All rights reserved.</div>
+      <div class="muted">© <span id="year"></span> 지능형AI융합연구실 All rights reserved.</div>
     </div>
   </footer>
 
