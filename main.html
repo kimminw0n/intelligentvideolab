@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>호남대학교 - 지능형 AI 융합 연구실</title>
+  <meta name="description" content="지능형 AI 융합 연구실"/>
+  <style>
+    /* ===== Base & Theme ===== */
+    :root {
+      --bg: #ffffff;
+      --text: #111827; /* slate-900 */
+      --muted: #6b7280; /* gray-500 */
+      --border: #e5e7eb; /* gray-200 */
+      --card: #ffffff;
+      --accent: #2563eb; /* blue-600 */
+      --accent-weak: #dbeafe; /* blue-100 */
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0b1220;
+        --text: #e5e7eb;
+        --muted: #94a3b8; /* slate-400 */
+        --border: #1f2937; /* gray-800 */
+        --card: #0f172a;  /* slate-900 */
+        --accent: #60a5fa; /* blue-400 */
+        --accent-weak: #0b3b80; /* custom */
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Noto Sans KR, Apple SD Gothic Neo, "Malgun Gothic", sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+    .section { scroll-margin-top: 80px; padding: 72px 0; border-top: 1px solid var(--border); }
+    .section:first-of-type { border-top: 0; }
+    h1, h2, h3 { line-height: 1.25; margin: 0 0 12px; }
+    h2 { font-size: clamp(24px, 2.4vw, 32px); }
+    p { margin: 0 0 12px; color: var(--text); }
+    .muted { color: var(--muted); }
+
+    /* ===== Skip link ===== */
+    .skip-link {
+      position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden;
+    }
+    .skip-link:focus {
+      left: 16px; top: 16px; width: auto; height: auto; padding: 8px 12px; background: var(--accent); color: #fff; border-radius: 10px;
+    }
+
+    /* ===== Header / Nav ===== */
+    header {
+      position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(150%) blur(6px);
+      border-bottom: 1px solid var(--border); background: color-mix(in srgb, var(--bg) 85%, transparent);
+    }
+    .nav {
+      display: flex; align-items: center; justify-content: space-between; padding-top: 20px;
+    }
+    .brand {
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  font-size: 1.5rem; /* 추가 */
+}
+    .brand .lab { color: var(--accent); }
+    nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 18px; }
+    nav a { padding: 8px 10px; border-radius: 10px; color: var(--muted); font-weight: 600; }
+    nav a:hover, nav a[aria-current="true"] { background: var(--accent-weak); color: var(--accent); }
+
+    /* Mobile menu */
+    .menu-btn { display: none; }
+    @media (max-width: 820px) {
+      nav { display: none; }
+      .menu-btn { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--border); padding: 8px 12px; border-radius: 10px; background: var(--card); }
+      .menu-panel { display: none; position: absolute; left: 0; right: 0; top: 58px; background: var(--card); border-bottom: 1px solid var(--border); }
+      .menu-panel ul { display: grid; gap: 4px; padding: 12px 20px; }
+      .menu-panel a { padding: 10px 12px; border-radius: 10px; color: var(--muted); font-weight: 600; }
+      .menu-panel a:hover { background: var(--accent-weak); color: var(--accent); }
+    }
+
+    /* ===== Hero ===== */
+    .hero {text-align: center;}
+
+    /* ===== Cards & Grids ===== */
+    .grid { display: grid; gap: 18px; }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    @media (max-width: 920px){ .grid-3 { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 680px){ .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 18px; box-shadow: 0 1px 0 color-mix(in srgb, var(--border) 50%, transparent); font-size:20px;font-weight: 700;}
+
+    /* ===== Professor ===== */
+    .prof { display: grid; grid-template-columns: 140px 1fr; gap: 18px; align-items: center; }
+   .avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;          /* 이미지가 원 밖으로 나가지 않도록 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--border); /* 이미지 없을 때 기본 배경 */
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 비율 유지하면서 원형 안에 꽉 채우기 */
+  border-radius: 50%;
+}
+
+    .meta { display: grid; gap: 6px; }
+    .meta a.link { color: var(--accent); font-weight: 600; }
+    @media (max-width: 560px){ .prof { grid-template-columns: 1fr; } .avatar { margin: 0 auto; } }
+
+    /* ===== Research Area ===== */
+    .area { display: grid; gap: 8px; }
+    .area h3 { margin-bottom: 4px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag { display: inline-flex; height: 36px; padding: 6px 10px; background: var(--accent-weak); color: var(--accent); font-weight: 700; border-radius: 999px; font-size: 13px; }
+
+    /* ===== Members ===== */
+    .member { display: grid; gap: 6px; }
+    .role { font-weight: 700; color: var(--muted); font-size: 14px; }
+    .member .link {
+  font-size: 13px;
+  color: #555;       /* 더 연한 회색 */
+  text-decoration: none;
+}
+
+    /* ===== Activities (Timeline) ===== */
+    .timeline { position: relative; padding-left: 18px; }
+    .timeline::before { content: ""; position: absolute; left: 7px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+    .tl-item { position: relative; padding: 8px 0 8px 14px; }
+    .tl-item::before { content: ""; position: absolute; left: -1px; top: 16px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+    .tl-date { font-size: 13px; color: var(--muted); margin-bottom: 2px; }
+
+    /* ===== Footer ===== */
+    footer { border-top: 1px solid var(--border); padding: 28px 0; color: var(--muted); }
+
+    /* ===== Utilities ===== */
+    .spacer-xxs { height: 6px; }
+    .spacer-xs  { height: 10px; }
+    .spacer-sm  { height: 16px; }
+
+    .video-section {
+  position: relative;
+  overflow: hidden;
+  height: 400px; /* 원하는 높이 */
+  color: white; /* 글자 색을 영상 위에서 잘 보이도록 */
+}
+
+.bg-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 영상이 꽉 차게 */
+  z-index: -1; /* 콘텐츠 뒤로 보냄 */
+}
+
+.video-section .content {
+  position: relative;
+  z-index: 1; /* 글자가 영상 위에 표시되도록 */
+  text-align: center;
+  padding: 50px 20px;
+  background: rgba(0,0,0,0.4); /* 가독성을 위해 반투명 배경 추가 가능 */
+  border-radius: 12px;
+  display: inline-block;
+}
+
+  </style>
+</head>
+<body id="top">
+  <a href="#main" class="skip-link">본문으로 바로가기</a>
+
+  <!-- ===== Header ===== -->
+  <header>
+    <div class="container nav">
+      <div class="brand" aria-label="지능형AI융합연구실">
+        <a href="#top"><img src="logo2.png" alt="연구실 로고" width="300" height="auto" /></a>
+      </div>
+      <nav aria-label="주요 메뉴">
+        <ul>
+          <li><a href="#about">연구실소개</a></li>
+          <li><a href="#activities">대외활동</a></li>
+          <li><a href="#research">연구분야</a></li>
+          <li><a href="#professor">담당교수</a></li>
+          <li><a href="#members">연구원</a></li>
+        </ul>
+      </nav>
+      <img src="logo.png" alt="연구실 로고" width="120" height="auto"  />
+      <button class="menu-btn" aria-expanded="false" aria-controls="menu-panel" id="menuToggle">메뉴</button>
+    </div>
+    <div class="menu-panel" id="menu-panel">
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ===== 연구실 소개 ===== -->
+    <section id="about" class="section video-section">
+      <video autoplay muted loop playsinline class="bg-video">
+    <source src="video.mp4" type="video/mp4" />
+    </video>
+      <div class="container">
+        <h2>지능형AI융합 연구실소개</h2>
+        <div class="card">
+          <p>지능형 AI 융합연구실은 첨단 인공지능 기술과 융합 응용 연구를 통해 이론과 실무를 아우르는 혁신적 연구를 수행하고 있습니다. 엣지 디바이스부터 AWS·GCP 기반 클라우드 인프라까지 다양한 환경을 활용하여 영상/음성 처리, 데이터 분류, LLM 등  경량화된 AI와 대규모 AI 모델이 공존하는 차세대 지능형 연구를 진행합니다.</p>
+      </div>
+    </section>
+<!-- ===== 대외활동 ===== -->
+    <section id="activities" class="section">
+  <div class="container">
+    <h2>대외활동</h2>
+    <div class="card timeline">
+      <div class="tl-item">
+        <div class="tl-date">2025-05</div>
+        <div><strong>스마트미디어학회</strong> 춘계학술대회 우수상
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2025-05</div>
+        <div><strong>전자통신학회</strong> 춘계학술대회 우수상 · 
+          <span class="muted">MFCC 음성인식 감정분석</span>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2025-06</div>
+        <div><strong>광주과학기술원(GIST)</strong> [Techive] 두번째 발표 참여 · 
+          <span class="muted">AI 최신 트렌드·응용 발표 + 실습 세션</span>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2025-06</div>
+        <div><strong>살레시오고</strong> 연구 및 학과 홍보 발표 · 
+          <span class="muted">멀티모달 상담 챗봇 LLM</span>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2025-06</div>
+        <div><strong>케냐 ICCSS</strong> 2025 컨퍼런스 · 
+          <span class="muted">멀티모달 상담 챗봇, MFCC 음성인식 감정분석</span>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2025-08</div>
+        <div><strong>제4회 SW 테스트 경진대회</strong> 본선진출 · 
+          <span class="muted">SW 품질관리 크라우드테스팅</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+     <!-- ===== 연구분야 ===== -->
+    <section id="research" class="section">
+      <div class="container">
+        <h2>연구분야</h2>
+        <div class="grid grid-3">
+          <article class="card area">
+            <h3>컴퓨터비전</h3>
+            <p class="muted">얼굴/행동 인식, 객체 검출, 시계열 비전</p>
+            <div class="tags">
+              <span class="tag">YOLO/Detect</span>
+              <span class="tag">Pose/Action</span>
+              <span class="tag">MTCNN/face-api</span>
+            </div>
+          </article>
+          <article class="card area">
+            <h3>자연어처리</h3>
+            <p class="muted">감성 분석, 질의응답, 지식기반 챗봇</p>
+            <div class="tags">
+              <span class="tag">LLM</span>
+              <span class="tag">RAG</span>
+              <span class="tag">Sentiment</span>
+            </div>
+          </article>
+          <article class="card area">
+            <h3>음성·오디오</h3>
+            <p class="muted">음성인식, 감정/이상음 탐지, 사운드 이벤트</p>
+            <div class="tags">
+              <span class="tag">ASR</span>
+              <span class="tag">CRNN</span>
+              <span class="tag">MelSpec</span>
+            </div>
+          </article>
+          <article class="card area">
+            <h3>엣지·클라우드</h3>
+            <p class="muted">서버리스 파이프라인, 데이터레이크, 배포 자동화</p>
+            <div class="tags">
+              <span class="tag">AWS</span>
+              <span class="tag">Docker/K8s</span>
+              <span class="tag">MLOps</span>
+            </div>
+          </article>
+          <article class="card area">
+            <h3>헬스케어 AI</h3>
+            <p class="muted">웨어러블, 신호처리, 디지털 치료제</p>
+            <div class="tags">
+              <span class="tag">HRV</span>
+              <span class="tag">Forecast</span>
+              <span class="tag">XAI</span>
+            </div>
+          </article>
+          <article class="card area">
+            <h3>감정분석 상호작용</h3>
+            <p class="muted">감정 인식·피드백, IoT</p>
+            <div class="tags">
+              <span class="tag">HRI</span>
+              <span class="tag">IoT</span>
+              <span class="tag">Edge AI</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 담당교수 ===== -->
+    <section id="professor" class="section">
+      <div class="container">
+        <h2>담당교수</h2>
+        <div class="card prof" role="group" aria-label="담당교수 정보">
+          <div class="avatar">
+  <img src="professor.jpg" alt="최광미 교수님 사진" />
+</div>
+
+          <div class="meta">
+            <h3>최광미 교수</h3>
+            <div class="muted">호남대학교/컴퓨터공학과 · 지능형AI융합연구실</div>
+            <div>
+              <a class="link" href="mailto:prof@example.ac.kr">mail : cgmi66@honam.ac.kr</a><br>
+              <a class="link">tel : 062-940-3665</a>
+            </div>
+            <div class="spacer-xxs"></div>
+            <p class="muted">전공 과목 : 빅데이터개론, 빅데이터시스템, 빅데이터실무, 자바프로그래밍, 객체지향프로그램</p>
+            <a class="link" href="https://com.honam.ac.kr/DepartmentProfessor/1863" target="https://com.honam.ac.kr/DepartmentProfessor/1863">
+              상세정보
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 연구원 ===== -->
+    <section id="members" class="section">
+      <div class="container">
+        <h2>연구원</h2>
+        <div class="grid grid-3">
+          <div class="card member">
+            <h3>김민원</h3>
+            <div class="role">학사과정 4학년</div>
+            <div class="tags">
+              <span class="tag">LLM</span>
+              <span class="tag">CNN</span>
+              <span class="tag">멀티모달</span>
+              <span class="tag">LSTM</span>
+            </div>
+            <a class="link" href="mailto:minwon0801@naver.com">minwon0801@naver.com</a>
+          </div>
+          <div class="card member">
+            <h3>박민수</h3>
+            <div class="role">학사과정 4학년</div>
+            <div class="tags">
+              <span class="tag">객체 분류</span>
+              <span class="tag">음성</span>
+              <span class="tag">RNN</span>
+              <span class="tag">영상처리</span>
+            </div>
+          </div>
+          <div class="card member">
+            <h3>이승기</h3>
+            <div class="role">학사과정 4학년</div>
+            <div class="tags">
+              <span class="tag">YOLO</span>
+              <span class="tag">CNN</span>
+              <span class="tag">LSTM</span>
+              <span class="tag">멀티모달</span>
+            </div>
+            <a class="link" href="mailto:dltmdrl010729@naver.com">dltmdrl010729@naver.com</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  <!-- ===== Footer ===== -->
+  <footer>
+    <div class="container">
+      <div><strong>주소</strong> · 62399 광주광역시 광산구 호남대길 112 호남대학교 컴퓨터공학과 창조관(8호관) 8508호</div>
+      <div>대표 메일: <a href="mailto:contact@example.ac.kr">cgmi66@honam.ac.kr</a> · 전화: 062-940-3665</div>
+      <div class="spacer-xs"></div>
+      <div class="muted">© <span id="year"></span> 지능형AI융합연구실 All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    // 모바일 메뉴 토글
+    const btn = document.getElementById('menuToggle');
+    const panel = document.getElementById('menu-panel');
+    btn?.addEventListener('click', () => {
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!open));
+      panel.style.display = open ? 'none' : 'block';
+    });
+    panel?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      panel.style.display = 'none'; btn.setAttribute('aria-expanded', 'false');
+    }));
+
+    // 현재 연도 표시
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // 내비 링크 active 표시 (해시 기반 단순 처리)
+    function setActiveLink(){
+      const hash = window.location.hash || '#professor';
+      document.querySelectorAll('header nav a').forEach(a => a.removeAttribute('aria-current'));
+      const current = document.querySelector(`header nav a[href="${hash}"]`);
+      current?.setAttribute('aria-current', 'true');
+    }
+    window.addEventListener('hashchange', setActiveLink);
+    window.addEventListener('DOMContentLoaded', setActiveLink);
+  </script>
+</body>
+</html>
