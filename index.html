@@ -418,7 +418,7 @@
 
     // 내비 링크 active 표시 (해시 기반 단순 처리)
     function setActiveLink(){
-      const hash = window.location.hash || '#professor';
+      const hash = window.location.hash || '#about';
       document.querySelectorAll('header nav a').forEach(a => a.removeAttribute('aria-current'));
       const current = document.querySelector(`header nav a[href="${hash}"]`);
       current?.setAttribute('aria-current', 'true');
