@@ -27,14 +27,16 @@
         --accent-weak: #0b3b80; /* custom */
       }
     }
+
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
     body {
       margin: 0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Noto Sans KR, Apple SD Gothic Neo, "Malgun Gothic", sans-serif;
       color: var(--text);
       background: var(--bg);
       line-height: 1.6;
+      word-break: keep-all; /* 한국어 줄바꿈 안정화 */
     }
     a { color: inherit; text-decoration: none; }
     img { max-width: 100%; display: block; }
@@ -57,43 +59,42 @@
     /* ===== Header / Nav ===== */
     header {
       position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(150%) blur(6px);
-      border-bottom: 1px solid var(--border); background: color-mix(in srgb, var(--bg) 85%, transparent);
+      border-bottom: 1px solid var(--border);
+      background: color-mix(in srgb, var(--bg) 92%, transparent); /* 가독성 소폭 강화 */
     }
     .nav {
       display: flex; align-items: center; justify-content: space-between; padding-top: 20px;
     }
-    .brand {
-  font-weight: 700;
-  letter-spacing: -0.2px;
-  font-size: 1.5rem; /* 추가 */
-}
+    .brand { font-weight: 700; letter-spacing: -0.2px; font-size: 1.5rem; }
     .brand .lab { color: var(--accent); }
     nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 18px; }
-    nav a { padding: 8px 10px; border-radius: 10px; color: var(--muted); font-weight: 600; }
+    nav a { padding: 8px 10px; border-radius: 10px; color: var(--muted); font-weight: 600; white-space: nowrap; word-break: keep-all; }
     nav a:hover, nav a[aria-current="true"] { background: var(--accent-weak); color: var(--accent); }
 
     /* Mobile menu */
     .menu-btn { display: none; }
+    .menu-panel { display: none; position: absolute; left: 0; right: 0; top: 58px; background: var(--card); border-bottom: 1px solid var(--border); }
+    .menu-panel ul { display: grid; gap: 4px; padding: 12px 20px; list-style: none; margin: 0; }
+    .menu-panel a { padding: 10px 12px; border-radius: 10px; color: var(--muted); font-weight: 600; }
+    .menu-panel a:hover { background: var(--accent-weak); color: var(--accent); }
+
+    /* 1) 모바일/태블릿 폭까지 내비 접기 (인앱 브라우저 고려) */
+    @media (max-width: 1024px) {
+      nav { display: none; }
+      .menu-btn { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--border); padding: 8px 12px; border-radius: 10px; background: var(--card); }
+    }
+
     /* === Mobile: 강제 라이트 테마 오버라이드 === */
-@media (max-width: 820px) {
-  :root {
-    /* 라이트 팔레트로 강제 재정의 */
-    --bg: #ffffff;
-    --text: #111827;
-    --muted: #6b7280;
-    --border: #e5e7eb;
-    --card: #ffffff;
-    --accent: #2563eb;
-    --accent-weak: #dbeafe;
-  }
-
-  /* iOS/안드로이드 브라우저 위젯에도 라이트 힌트 */
-  html, body { background: #ffffff; color-scheme: light; }
-}
-
+    @media (max-width: 820px) {
+      :root {
+        --bg: #ffffff; --text: #111827; --muted: #6b7280;
+        --border: #e5e7eb; --card: #ffffff; --accent: #2563eb; --accent-weak: #dbeafe;
+      }
+      html, body { background: #ffffff; color-scheme: light; }
+    }
 
     /* ===== Hero ===== */
-    .hero {text-align: center;}
+    .hero { text-align: center; }
 
     /* ===== Cards & Grids ===== */
     .grid { display: grid; gap: 18px; }
@@ -102,28 +103,12 @@
     @media (max-width: 920px){ .grid-3 { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 680px){ .grid-2, .grid-3 { grid-template-columns: 1fr; } }
 
-    .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 18px; box-shadow: 0 1px 0 color-mix(in srgb, var(--border) 50%, transparent); font-size:20px;font-weight: 700;}
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 18px; box-shadow: 0 1px 0 color-mix(in srgb, var(--border) 50%, transparent); font-size:20px; font-weight: 700; }
 
     /* ===== Professor ===== */
     .prof { display: grid; grid-template-columns: 140px 1fr; gap: 18px; align-items: center; }
-   .avatar {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  overflow: hidden;          /* 이미지가 원 밖으로 나가지 않도록 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--border); /* 이미지 없을 때 기본 배경 */
-}
-
-.avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* 비율 유지하면서 원형 안에 꽉 채우기 */
-  border-radius: 50%;
-}
-
+    .avatar { width: 120px; height: 120px; border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center; background: var(--border); }
+    .avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
     .meta { display: grid; gap: 6px; }
     .meta a.link { color: var(--accent); font-weight: 600; }
     @media (max-width: 560px){ .prof { grid-template-columns: 1fr; } .avatar { margin: 0 auto; } }
@@ -137,11 +122,7 @@
     /* ===== Members ===== */
     .member { display: grid; gap: 6px; }
     .role { font-weight: 700; color: var(--muted); font-size: 14px; }
-    .member .link {
-  font-size: 13px;
-  color: #555;       /* 더 연한 회색 */
-  text-decoration: none;
-}
+    .member .link { font-size: 13px; color: #555; text-decoration: none; }
 
     /* ===== Activities (Timeline) ===== */
     .timeline { position: relative; padding-left: 18px; }
@@ -158,33 +139,13 @@
     .spacer-xs  { height: 10px; }
     .spacer-sm  { height: 16px; }
 
-    .video-section {
-  position: relative;
-  overflow: hidden;
-  height: 400px; /* 원하는 높이 */
-  color: white; /* 글자 색을 영상 위에서 잘 보이도록 */
-}
-
-.bg-video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* 영상이 꽉 차게 */
-  z-index: -1; /* 콘텐츠 뒤로 보냄 */
-}
-
-.video-section .content {
-  position: relative;
-  z-index: 1; /* 글자가 영상 위에 표시되도록 */
-  text-align: center;
-  padding: 50px 20px;
-  background: rgba(0,0,0,0.4); /* 가독성을 위해 반투명 배경 추가 가능 */
-  border-radius: 12px;
-  display: inline-block;
-}
-
+    /* ===== Video Hero ===== */
+    .video-section { position: relative; overflow: hidden; height: 400px; color: white; }
+    .bg-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; }
+    .video-section .content {
+      position: relative; z-index: 1; text-align: center; padding: 50px 20px;
+      background: rgba(0,0,0,0.4); border-radius: 12px; display: inline-block;
+    }
   </style>
 </head>
 <body id="top">
@@ -196,6 +157,8 @@
       <div class="brand" aria-label="지능형AI융합연구실">
         <a href="#top"><img src="logo2.png" alt="연구실 로고" width="300" height="auto" /></a>
       </div>
+
+      <!-- 데스크톱 내비 -->
       <nav aria-label="주요 메뉴">
         <ul>
           <li><a href="#about">연구실소개</a></li>
@@ -205,10 +168,20 @@
           <li><a href="#members">연구원</a></li>
         </ul>
       </nav>
-      <img src="logo.png" alt="연구실 로고" width="120" height="auto"  />
-      <button class="menu-btn" aria-expanded="false" aria-controls="menu-panel" id="menuToggle">메뉴</button>
+
+      <img src="logo.png" alt="연구실 로고" width="120" height="auto" />
+      <button class="menu-btn" aria-expanded="false" aria-controls="menu-panel" id="menuToggle" aria-label="모바일 메뉴 열기">메뉴</button>
     </div>
+
+    <!-- 모바일 패널 내비 -->
     <div class="menu-panel" id="menu-panel">
+      <ul>
+        <li><a href="#about">연구실소개</a></li>
+        <li><a href="#activities">대외활동</a></li>
+        <li><a href="#research">연구분야</a></li>
+        <li><a href="#professor">담당교수</a></li>
+        <li><a href="#members">연구원</a></li>
+      </ul>
     </div>
   </header>
 
@@ -216,60 +189,50 @@
     <!-- ===== 연구실 소개 ===== -->
     <section id="about" class="section video-section">
       <video autoplay muted loop playsinline class="bg-video">
-    <source src="video.mp4" type="video/mp4" />
-    </video>
+        <source src="video.mp4" type="video/mp4" />
+      </video>
       <div class="container">
         <h2>지능형AI융합 연구실소개</h2>
         <div class="card">
           <p>지능형 AI 융합연구실은 첨단 인공지능 기술과 융합 응용 연구를 통해 이론과 실무를 아우르는 혁신적 연구를 수행하고 있습니다. 엣지 디바이스부터 AWS·GCP 기반 클라우드 인프라까지 다양한 환경을 활용하여 영상/음성 처리, 데이터 분류, LLM 등  경량화된 AI와 대규모 AI 모델이 공존하는 차세대 지능형 연구를 진행합니다.</p>
+        </div>
       </div>
     </section>
-<!-- ===== 대외활동 ===== -->
+
+    <!-- ===== 대외활동 ===== -->
     <section id="activities" class="section">
-  <div class="container">
-    <h2>대외활동</h2>
-    <div class="card timeline">
-      <div class="tl-item">
-        <div class="tl-date">2025-05</div>
-        <div><strong>스마트미디어학회</strong> 춘계학술대회 우수상
+      <div class="container">
+        <h2>대외활동</h2>
+        <div class="card timeline">
+          <div class="tl-item">
+            <div class="tl-date">2025-05</div>
+            <div><strong>스마트미디어학회</strong> 춘계학술대회 우수상</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">2025-05</div>
+            <div><strong>전자통신학회</strong> 춘계학술대회 우수상 · <span class="muted">MFCC 음성인식 감정분석</span></div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">2025-06</div>
+            <div><strong>광주과학기술원(GIST)</strong> [Techive] 두번째 발표 참여 · <span class="muted">AI 최신 트렌드·응용 발표 + 실습 세션</span></div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">2025-06</div>
+            <div><strong>살레시오고</strong> 연구 및 학과 홍보 발표 · <span class="muted">멀티모달 상담 챗봇 LLM</span></div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">2025-06</div>
+            <div><strong>케냐 ICCSS</strong> 2025 컨퍼런스 · <span class="muted">멀티모달 상담 챗봇, MFCC 음성인식 감정분석</span></div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">2025-08</div>
+            <div><strong>제4회 SW 테스트 경진대회</strong> 본선진출 · <span class="muted">SW 품질관리 크라우드테스팅</span></div>
+          </div>
         </div>
       </div>
-      <div class="tl-item">
-        <div class="tl-date">2025-05</div>
-        <div><strong>전자통신학회</strong> 춘계학술대회 우수상 · 
-          <span class="muted">MFCC 음성인식 감정분석</span>
-        </div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-date">2025-06</div>
-        <div><strong>광주과학기술원(GIST)</strong> [Techive] 두번째 발표 참여 · 
-          <span class="muted">AI 최신 트렌드·응용 발표 + 실습 세션</span>
-        </div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-date">2025-06</div>
-        <div><strong>살레시오고</strong> 연구 및 학과 홍보 발표 · 
-          <span class="muted">멀티모달 상담 챗봇 LLM</span>
-        </div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-date">2025-06</div>
-        <div><strong>케냐 ICCSS</strong> 2025 컨퍼런스 · 
-          <span class="muted">멀티모달 상담 챗봇, MFCC 음성인식 감정분석</span>
-        </div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-date">2025-08</div>
-        <div><strong>제4회 SW 테스트 경진대회</strong> 본선진출 · 
-          <span class="muted">SW 품질관리 크라우드테스팅</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-
-     <!-- ===== 연구분야 ===== -->
+    <!-- ===== 연구분야 ===== -->
     <section id="research" class="section">
       <div class="container">
         <h2>연구분야</h2>
@@ -338,21 +301,18 @@
         <h2>담당교수</h2>
         <div class="card prof" role="group" aria-label="담당교수 정보">
           <div class="avatar">
-  <img src="professor.jpg" alt="최광미 교수님 사진" />
-</div>
-
+            <img src="professor.jpg" alt="최광미 교수님 사진" />
+          </div>
           <div class="meta">
             <h3>최광미 교수</h3>
             <div class="muted">호남대학교/컴퓨터공학과 · 지능형AI융합연구실</div>
             <div>
-              <a class="link" href="mailto:prof@example.ac.kr">mail : cgmi66@honam.ac.kr</a><br>
+              <a class="link" href="mailto:cgmi66@honam.ac.kr">mail : cgmi66@honam.ac.kr</a><br>
               <a class="link">tel : 062-940-3665</a>
             </div>
             <div class="spacer-xxs"></div>
             <p class="muted">전공 과목 : 빅데이터개론, 빅데이터시스템, 빅데이터실무, 자바프로그래밍, 객체지향프로그램</p>
-            <a class="link" href="https://com.honam.ac.kr/DepartmentProfessor/1863" target="https://com.honam.ac.kr/DepartmentProfessor/1863">
-              상세정보
-            </a>
+            <a class="link" href="https://com.honam.ac.kr/DepartmentProfessor/1863" target="_blank" rel="noopener">상세정보</a>
           </div>
         </div>
       </div>
@@ -383,6 +343,7 @@
               <span class="tag">RNN</span>
               <span class="tag">영상처리</span>
             </div>
+            <a class="link" href="mailto:9552583@naver.com">9552583@naver.com</a>
           </div>
           <div class="card member">
             <h3>이승기</h3>
@@ -398,12 +359,13 @@
         </div>
       </div>
     </section>
+  </main>
 
   <!-- ===== Footer ===== -->
   <footer>
     <div class="container">
       <div><strong>주소</strong> · 62399 광주광역시 광산구 호남대길 112 호남대학교 컴퓨터공학과 창조관(8호관) 8508호</div>
-      <div>대표 메일: <a href="mailto:contact@example.ac.kr">cgmi66@honam.ac.kr</a> · 전화: 062-940-3665</div>
+      <div>대표 메일: <a href="mailto:cgmi66@honam.ac.kr">cgmi66@honam.ac.kr</a> · 전화: 062-940-3665</div>
       <div class="spacer-xs"></div>
       <div class="muted">© <span id="year"></span> 지능형AI융합연구실 All rights reserved.</div>
     </div>
